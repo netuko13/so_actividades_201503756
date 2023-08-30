@@ -1,0 +1,10 @@
+[Unit]
+Description=Actividad No, 4 del curso sistemas operativos 2S2023
+
+[Service]
+ExecStart=/home/tukito/saludo.sh
+Restart=always
+IgnoreSIGPIPE=no
+
+[Install]
+Alias=saludo.service
