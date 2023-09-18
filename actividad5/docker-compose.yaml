@@ -1,0 +1,33 @@
+services:
+  myfrontend:
+    build:
+      context: ./frontend
+      dockerfile: nginx.dockerfile
+    image: susguzman/so1-s223-front:0.1.1-nginx-alpine
+    ports:
+      - 8888:80
+    volumes:
+      - ./frontend/conf.d:/etc/nginx/conf.d # Monta la carpeta con el archivo de configuración    
+
+  mybackend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: susguzman/so1-s223-back:0.1.0
+    ports:
+      - 3800:3800
+    env_file:
+      - ./.env
+    restart: always
+  database:
+    image: gvenzl/oracle-xe:21.3.0
+    ports:
+      - 1521:1521
+    env_file:
+      - ./.env
+    volumes:
+      - ./database:/container-entrypoint-initdb.d
+      - oracle-data:/opt/oracle/oradata
+
+volumes:
+  oracle-data:
